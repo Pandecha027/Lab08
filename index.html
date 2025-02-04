@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Blog</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>My Blog</h1>
+
+    <!-- ฟอร์มเขียนบล็อก -->
+    <div class="blog-form">
+      <h2 id="form-title">เขียนบล็อกใหม่</h2>
+      <form id="blog-form">
+        <input type="hidden" id="edit-id" />
+        <input type="text" id="title" placeholder="หัวข้อ" required />
+        <textarea id="content" placeholder="เนื้อหา" required></textarea>
+       
+        <!-- 🆕 เพิ่มช่องกรอกแท็กที่นี่ -->
+        <input type="text" id="tags" placeholder="แท็ก (คั่นด้วย ,)" />
+
+        <button type="submit" class="btn-submit">บันทึก</button>
+        <button type="button" id="cancel-btn" class="hidden">ยกเลิก</button>
+      </form>
+    </div>
+
+    <!-- เพิ่มช่องค้นหาบล็อกตามแท็กด้านบนของรายการบล็อก -->
+    <input type="text" id="tag-filter" placeholder="ค้นหาตามแท็ก" />
+
+    <!-- รายการบล็อก -->
+    <div id="blog-list">
+      <!-- JavaScript จะเพิ่มบล็อกที่นี่ -->
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
