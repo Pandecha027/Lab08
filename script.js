@@ -1,5 +1,5 @@
 // Blog Class - จัดการข้อมูลบล็อก
-class Blog {
+class Blog { // ใช้จัดการข้อมูลบล็อก โดยมี ID, หัวข้อ, เนื้อหา, แท็ก และ วันที่สร้าง/แก้ไข เมื่อลงทะเบียนบล็อกใหม่จะกำหนดค่าทั้งหมดอัตโนมัติ
     constructor(id, title, content, tags = []) {
       this.id = id;
       this.title = title;
@@ -9,14 +9,14 @@ class Blog {
       this.updatedDate = new Date();
     }
   
-    update(title, content, tags) {
+    update(title, content, tags) { //ใช้ อัปเดตข้อมูลบล็อก โดย:เปลี่ยน หัวข้อ (title)เปลี่ยน เนื้อหา (content)เปลี่ยน แท็ก (tags)อัปเดต วันที่แก้ไข (updatedDate) เป็นเวลาปัจจุบัน
       this.title = title;
       this.content = content;
       this.tags = tags;
       this.updatedDate = new Date();
     }
   
-    getFormattedDate() {
+    getFormattedDate() { //ใช้ แปลงวันที่แก้ไข
       return this.updatedDate.toLocaleString("th-TH", {
         year: "numeric",
         month: "long",
@@ -33,7 +33,7 @@ class Blog {
       this.blogs = [];
     }
   
-    addBlog(title, content, tags) {
+    addBlog(title, content, tags) { //เพิ่ม บล็อก
       const blog = new Blog(Date.now(), title, content, tags);
       this.blogs.push(blog);
       this.sortBlogs();
@@ -41,7 +41,7 @@ class Blog {
       return blog;
     }
   
-    updateBlog(id, title, content, tags) {
+    updateBlog(id, title, content, tags) { //อัพเดตบล็อค
       const blog = this.getBlog(id);
       if (blog) {
         blog.update(title, content, tags);
@@ -51,24 +51,24 @@ class Blog {
       return blog;
     }
   
-    deleteBlog(id) {
+    deleteBlog(id) { //ลบบล็อค
       this.blogs = this.blogs.filter((blog) => blog.id !== id);
       this.saveToLocalStorage();
     }
   
-    getBlog(id) {
+    getBlog(id) { //ค้นหาบล็อกที่มี ID ตรงกัน
       return this.blogs.find((blog) => blog.id === id);
     }
   
-    sortBlogs() {
+    sortBlogs() { //เรียงลำดับบล็อกตาม วันที่แก้ไขล่าสุด
       this.blogs.sort((a, b) => b.updatedDate - a.updatedDate);
     }
   
-    saveToLocalStorage() {
+    saveToLocalStorage() { //บันทึกรายการบล็อก
       localStorage.setItem("blogs", JSON.stringify(this.blogs));
     }
   
-    loadFromLocalStorage() {
+    loadFromLocalStorage() { //โหลดบล็อก
       const storedBlogs = localStorage.getItem("blogs");
       if (storedBlogs) {
         this.blogs = JSON.parse(storedBlogs).map(
@@ -77,7 +77,7 @@ class Blog {
       }
     }
   
-    filterByTag(tag) {
+    filterByTag(tag) { //ค้นหาบล็อกที่มี แท็กตรงกับค่าที่ระบุ
       return this.blogs.filter((blog) => blog.tags.includes(tag));
     }
   }
@@ -92,18 +92,18 @@ class Blog {
     }
   
     initElements() {
-      this.form = document.getElementById("blog-form");
-      this.titleInput = document.getElementById("title");
-      this.contentInput = document.getElementById("content");
+      this.form = document.getElementById("blog-form"); //เพิ่ม/แก้ไขบล็อก
+      this.titleInput = document.getElementById("title"); //หัวข้อบล็อก
+      this.contentInput = document.getElementById("content"); //เนื้อหาบล็อก
       this.tagsInput = document.getElementById("tags"); // ช่องกรอกแท็ก
-      this.editIdInput = document.getElementById("edit-id");
-      this.formTitle = document.getElementById("form-title");
-      this.cancelBtn = document.getElementById("cancel-btn");
-      this.blogList = document.getElementById("blog-list");
+      this.editIdInput = document.getElementById("edit-id"); //ซ่อนค่า ID ของบล็อกที่กำลังแก้ไข
+      this.formTitle = document.getElementById("form-title"); //หัวข้อของฟอร์ม (ใช้เปลี่ยนชื่อเป็น "แก้ไขบล็อก" เมื่อต้องการอัปเดต)
+      this.cancelBtn = document.getElementById("cancel-btn"); //ปุ่ม ยกเลิกการแก้ไข
+      this.blogList = document.getElementById("blog-list"); //ที่ใช้แสดง รายการบล็อก
       this.tagFilter = document.getElementById("tag-filter"); // ช่องค้นหาแท็ก
     }
   
-    initEventListeners() {
+    initEventListeners() { //กำหนด Event
       this.form.addEventListener("submit", (e) => {
         e.preventDefault();
         this.handleSubmit();
@@ -119,10 +119,10 @@ class Blog {
     }
   
     handleSubmit() {
-      const title = this.titleInput.value.trim();
-      const content = this.contentInput.value.trim();
+      const title = this.titleInput.value.trim(); //ดึงหัวข้อจากฟอร์มและลบช่องว่าง
+      const content = this.contentInput.value.trim(); //ดึงเนื้อหาจากฟอร์มและลบช่องว่าง
       const tags = this.tagsInput.value.split(",").map((tag) => tag.trim()); // แปลงแท็กเป็น array
-      const editId = parseInt(this.editIdInput.value);
+      const editId = parseInt(this.editIdInput.value); //ดึง ID ของบล็อกที่กำลังแก้ไข
   
       if (title && content) {
         if (editId) {
@@ -135,8 +135,8 @@ class Blog {
       }
     }
   
-    editBlog(id) {
-      const blog = this.blogManager.getBlog(id);
+    editBlog(id) { //แก้ไขบล็อก
+      const blog = this.blogManager.getBlog(id); //ดึงข้อมูลบล็อก
       if (blog) {
         this.titleInput.value = blog.title;
         this.contentInput.value = blog.content;
@@ -148,14 +148,14 @@ class Blog {
       }
     }
   
-    deleteBlog(id) {
+    deleteBlog(id) { //ลบบล็อก
       if (confirm("ต้องการลบบล็อกนี้ใช่หรือไม่?")) {
         this.blogManager.deleteBlog(id);
         this.render();
       }
     }
   
-    resetForm() {
+    resetForm() { //รีเซ็ต บล็อก
       this.form.reset();
       this.editIdInput.value = "";
       this.formTitle.textContent = "เขียนบล็อกใหม่";
